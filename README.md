@@ -75,22 +75,31 @@ pip install -r requirements.txt
 ```
 
 ## 🚀 Uso  
-### Ejecutar simulación completa (con generación de gráficos y datos):  
+### Paso 1 – Ejecutar la simulación y generar archivos `.nc` y `.png`:  
 ```bash
-python run_simulation.py
+python p01_run_simulation.py
 ```
+Esto generará:
+- Un archivo `.nc` con los resultados numéricos en `outputs/data/`
+- Una serie de imágenes `.png` en `outputs/figures/EulerBackward/` para cada instante de tiempo
+---
 
-### Para pruebas simples o demostración visual:  
+### Paso 2 – Generar animación `.gif` con los resultados:  
 ```bash
-python src/main.py
+python p02_gif_image.py
 ```
+Esto generará:
+- Un archivo `.gif` en `outputs/figures/`, mostrando la evolución temporal del contaminante
+---
 
-### Parámetros configurables (en `src/main.py` o `run_simulation.py`):  
+### Parámetros configurables:
+Los siguientes parámetros se pueden modificar dentro de `p01_run_simulation.py` y `p02_gif_image.py`:
 ```python
 u = 10       # Velocidad de advección (m/s)  
-Nx = 101     # Puntos en la malla  
+Nx = 101     # Número de puntos espaciales  
 dx = 500     # Espaciado del grid (m)  
-dt = 60      # Paso de tiempo (s)  
+dt = 40      # Paso de tiempo (s)  
+nr = 10      # Control del ancho de la gaussiana inicial
 ```
 
 ## 📊 Ejemplos  

@@ -75,22 +75,46 @@ pip install -r requirements.txt
 ```
 
 ## 🚀 Uso  
-### Paso 1 – Ejecutar la simulación y generar archivos `.nc` y `.png`:  
-```bash
-python p01_run_simulation.py
-```
-Esto generará:
-- Un archivo `.nc` con los resultados numéricos en `outputs/data/`
-- Una serie de imágenes `.png` en `outputs/figures/EulerBackward/` para cada instante de tiempo
+### Configuración básica  
+Los scripts aceptan parámetros clave para personalizar la simulación:  
+- `--dt`: Paso de tiempo (default: `40`)  
+- `--nr`: Ancho de la gaussiana (default: `10`)  
+- `--profile`: Perfil inicial (`gauss` o `rectg`, default: `gauss`)  
+
 ---
 
-### Paso 2 – Generar animación `.gif` con los resultados:  
+### Paso 1 – Ejecutar la simulación  
 ```bash
-python p02_gif_image.py
+python p01_run_simulation.py [--dt 40] [--nr 10] [--profile gauss|rectg]
+```  
+**Ejemplos**:  
+```bash
+# Gaussiana estrecha (nr=2)
+python p01_run_simulation.py --nr 2 --profile gauss
+
+# Pulso rectangular
+python p01_run_simulation.py --profile rectg
+```  
+
+**Salidas generadas**:  
+- `outputs/data/`  
+  - `EulerBackward_dt[VALOR]_CFL[VALOR]_dx500_profile[gauss|rectg]_nr[VALOR]_numerical.nc` (resultados numéricos)  
+  - `EulerBackward_dt[VALOR]_CFL[VALOR]_dx500_profile[gauss|rectg]_nr[VALOR]_analytical.nc` (solución analítica)  
+- `outputs/figures/EulerBackward/`  
+  - Imágenes `.png` para cada paso de tiempo (ej: `3D000_EulerBackward_dt40_...png`)  
+
+### Paso 2 – Generar animación `.gif` con los resultados:  
+
+```bash
+python p02_gif_image.py --method [NOMBRE_MÉTODO] --dt [VALOR] --profile [gauss|rectg] [--nr VALOR] [--type numerical|analytical]
 ```
-Esto generará:
-- Un archivo `.gif` en `outputs/figures/`, mostrando la evolución temporal del contaminante
----
+
+```bash
+# Animación numérica con perfil gaussiano
+python p02_gif_image.py --method "Euler Backward" --dt 40 --profile gauss --nr 5
+# Animación analítica con perfil rectangular
+python p02_gif_image.py --method "Euler Forward" --dt 60 --profile rectg --type analytical
+```
 
 ### Parámetros configurables:
 Los siguientes parámetros se pueden modificar dentro de `p01_run_simulation.py` y `p02_gif_image.py`:

@@ -12,15 +12,18 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUTS_DIR = os.path.join(BASE_DIR, "outputs")
 os.makedirs(os.path.join(OUTPUTS_DIR, "data"), exist_ok=True)
 os.makedirs(os.path.join(OUTPUTS_DIR, "figures"), exist_ok=True)
-dt = 40 # cambiar aqui
-
-def run_simulation(dt):
+##################################################################
+dt = 40      # Paso de tiempo (s)
+nr = 10      # Parámetro de la gaussiana
+metodo="Euler Backward"
+##################################################################
+def run_simulation(dt,nr,metodo):
     # Parámetros de simulación
     u = 10       # Velocidad de advección (m/s)
     Nx = 101     # Puntos en la malla
     dx = 500     # Espaciado del grid (m)
     #dt = 60      # Paso de tiempo (s)
-    nr = 10      # Parámetro de la gaussiana
+    #nr = 10      # Parámetro de la gaussiana
     total_steps = Nx * 2  # Pasos totales de simulación
 
     # Coordenadas espaciales y temporales
@@ -49,7 +52,7 @@ def run_simulation(dt):
     })
 
     # Guardar resultados
-    metodo="Euler Backward"
+    
     nmet=metodo.replace(' ','')
     o_file= "%s_dt%s_CFL%s_dx%s"%(metodo.replace(' ',''),dt,CFL,dx)
     nc_path = os.path.join(OUTPUTS_DIR, "data",o_file)
@@ -63,4 +66,4 @@ def run_simulation(dt):
     print(f"Gráfico guardado en: {fig_path}")
 
 if __name__ == "__main__":
-    run_simulation(dt)
+    run_simulation(dt,nr,metodo)

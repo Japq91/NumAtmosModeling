@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 import os
 from PIL import Image
-#import xarray as xr
-#import matplotlib.pyplot as plt
 from glob import glob as gb
 # Configuración de directorios
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -11,11 +9,11 @@ OUTPUTS_DIR = os.path.join(BASE_DIR, "outputs")
 print(OUTPUTS_DIR)
 os.makedirs(os.path.join(OUTPUTS_DIR, "data"), exist_ok=True)
 os.makedirs(os.path.join(OUTPUTS_DIR, "figures"), exist_ok=True)
-#
-metodo="Euler Backward"
+##################################################################
 dt = 40      # Paso de tiempo (s)
 nr = 10      # Parámetro de la gaussiana
-#
+metodo="Euler Backward"
+##################################################################
 def gera_gif(fileima):
     # 2. Recortas con Pillow (50% superior)
     img = Image.open(fileima)
@@ -25,7 +23,7 @@ def gera_gif(fileima):
     bottom = (espacio-1) * height // espacio    
     central_half = img.crop((0, top, width, bottom))    
     central_half.save(fileima.replace('3D','tmp_'))
-def run_simulation():
+def run_simulation(dt,nr,metodo):
     # Parámetros de simulación
     u = 10       # Velocidad de advección (m/s)
     Nx = 101     # Puntos en la malla
@@ -45,4 +43,4 @@ def run_simulation():
     os.system('rm %s/tmp_*.png'%rout)
 
 if __name__ == "__main__":
-    run_simulation()
+    run_simulation(dt,nr,metodo)

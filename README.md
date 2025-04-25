@@ -165,12 +165,12 @@ Incluye tests para los módulos:
 ## 📖 Documentación Técnica  
 El directorio [`docs/`](docs/) contiene documentación detallada del proyecto, incluyendo:
 
-- `introduccion.md`: Fundamentos del modelo de advección y su importancia en ciencias atmosféricas.  
-- `ecuaciones.md`: Descripción de la ecuación de advección 1D, condiciones iniciales y de frontera.  
-- `metodos.md`: Métodos numéricos implementados: Euler Backward, Leapfrog, RK4, etc.  
-- `criterios_estabilidad.md`: Criterios de estabilidad, número de CFL, y análisis de Von Neumann.  
-- `experimentos.md`: Configuraciones de simulación, condiciones de prueba y criterios de evaluación.  
-- `referencias.md`: Bibliografía científica utilizada (formato APA7).
+- `01_Introduction.md`: Fundamentos del modelo de advección y su importancia en ciencias atmosféricas.  
+- `02_Equation.md`: Descripción de la ecuación de advección 1D, condiciones iniciales y de frontera.  
+- `03_Methods.md`: Métodos numéricos implementados: Euler Backward, Leapfrog, RK4, etc.  
+- `04_Stability.md`: Criterios de estabilidad, número de CFL, y análisis de Von Neumann.  
+- `05_Experiments.md`: Configuraciones de simulación, condiciones de prueba y criterios de evaluación.  
+- `06_Referenc.md`: Bibliografía científica utilizada (formato APA7).
 
 
 ## ✉️ Contacto  

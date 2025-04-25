@@ -1,4 +1,4 @@
-# atMOdel 🌪️
+# atMOdel
 **Modelo Numérico de Advección con diferentes Esquemas**  
 *Simulación de transporte de contaminantes usando métodos numéricos y visualización 3D.*
 
@@ -10,9 +10,8 @@
 5. [Uso](#-uso)  
 6. [Ejemplos](#-ejemplos)  
 7. [Resultados](#-resultados)  
-8. [Pruebas](#-pruebas)  
-9. [Contribución](#-contribución)  
-10. [Documentación Técnica](#-documentación-técnica)  
+8. [Contribución](#-contribución)  
+9. [Documentación Técnica](#-documentación-técnica)  
 
 
 ## 🌟 Descripción  
@@ -26,30 +25,22 @@ Este proyecto simula el transporte de un contaminante en un flujo unidimensional
 ## 📂 Estructura del Proyecto  
 ```plaintext
 atMOdel/  
-├── src/                   # Código fuente principal  
-│   ├── physics.py         # Funciones numéricas (e.g., Euler backward)  
-│   ├── data_handling.py   # Carga, guardado y metadatos de NetCDF  
-│   ├── visualization.py   # Funciones de graficado 3D y superficie  
-│   └── main.py            # Ejemplo base de simulación (1 sola corrida)  
-├── p01_run_simulation.py      # Script principal con gestión de outputs  
-├── p02_gif_image.py           # Script para crear animaciones .gif  
-├── outputs/               # Resultados de simulación  
+├── src/                   # Código fuente  
+│   ├── physics.py         # Cálculos numéricos (Euler backward)  
+│   ├── data_handling.py   # Manejo de datos NetCDF  
+│   └── visualization.py   # Visualización 3D  
+├── p01_run_simulation.py  # Script principal de simulación  
+├── p02_generate_plots.py  # Generador de gráficos  
+├── p03_make_animation.py  # Creador de animaciones  
+├── outputs/               # Resultados  
 │   ├── data/              # Archivos NetCDF (.nc)  
-│   └── figures/           # Imágenes y animaciones  
-├── tests/                 # Pruebas unitarias  
-│   ├── test_data/         # Datos para pruebas  
-│   ├── test_physics.py    # Pruebas del módulo físico  
-│   └── ...                # Otros archivos de test  
-├── docs/                  # Documentación técnica completa  
+│   ├── figures/           # Imágenes estáticas  
+│   └── animations/        # Animaciones GIF  
+├── docs/                  # Documentación técnica  
 │   ├── 01_Introduction.md  
 │   ├── 02_Equation.md  
-│   ├── 03_Methods.md  
-│   ├── 04_Stability.md  
-│   ├── 05_Experiments.md  
-│   └── 06_Referenc.md  
-├── requirements.txt       # Lista de dependencias  
-├── README.md              # Documento de presentación del proyecto  
-└── .gitignore             # Archivos a ignorar por git  
+│   ├── ...  
+└── requirements.txt       # Dependencias  
 ```
 
 ## 🛠️ Requisitos  
@@ -66,7 +57,7 @@ pillow>=9.0.0
 ## ⚙️ Instalación  
 1. Clona el repositorio:  
 ```bash
-git clone https://github.com/tu-usuario/atMOdel.git
+git clone https://github.com/Japq91/atMOdel.git
 cd atMOdel
 ```  
 2. Instala dependencias:  
@@ -81,74 +72,67 @@ Los scripts aceptan parámetros clave para personalizar la simulación:
 - `--nr`: Ancho de la gaussiana (default: `10`)  
 - `--profile`: Perfil inicial (`gauss` o `rectg`, default: `gauss`)  
 
----
-
 ### Paso 1 – Ejecutar la simulación  
 ```bash
-python p01_run_simulation.py [--dt 40] [--nr 10] [--profile gauss|rectg]
+python p01_run_simulation.py --method [NOMBRE_MÉTODO] --dt [VALOR] --profile [gauss|rectg] --nr [VALOR]
+
 ```  
 **Ejemplos**:  
 ```bash
-# Gaussiana estrecha (nr=2)
-python p01_run_simulation.py --nr 2 --profile gauss
-
-# Pulso rectangular
-python p01_run_simulation.py --profile rectg
+python p01_run_simulation.py --method "Euler Backward" --dt 30 --profile gauss --nr 10
 ```  
-
-**Salidas generadas**:  
-- `outputs/data/`
-  - `EulerBackward_dt[VALOR]_CFL[VALOR]_dx500_profile[gauss|rectg]_nr[VALOR]_numerical.nc` (resultados numéricos)  
-  - `EulerBackward_dt[VALOR]_CFL[VALOR]_dx500_profile[gauss|rectg]_nr[VALOR]_analytical.nc` (solución analítica)  
-- `outputs/figures/EulerBackward/`  
-  - Imágenes `.png` para cada paso de tiempo (ej: `3D000_EulerBackward_dt40_...png`)  
-
 ### Paso 2 – Generar animación `.gif` con los resultados:  
 
 ```bash
-python p02_gif_image.py --method [NOMBRE_MÉTODO] --dt [VALOR] --profile [gauss|rectg] [--nr VALOR] [--type numerical|analytical]
+python p02_gif_image.py --numerical [NOMBRE_MÉTODO] --dt [VALOR] --profile [gauss|rectg] [--nr VALOR]
+```  
+**Ejemplos**:  
+```bash
+python p02_generate_plots.py --numerical "Euler Backward" --dt 30 --profile gauss --nr 10
+python p02_generate_plots.py --analytical "Euler Backward" --dt 30 --profile gauss --nr 10
+
 ```
+
+### Paso 3 – Generar animación `.gif` con los resultados:  
 
 ```bash
+python p03_make_animation.py --numerical [NOMBRE_MÉTODO] --dt [VALOR] --profile [gauss|rectg] [--nr VALOR]
+```
+**Ejemplos**:  
+```bash
 # Animación numérica con perfil gaussiano
-python p02_gif_image.py --method "Euler Backward" --dt 40 --profile gauss --nr 5
+python p03_make_animation.py --numerical "Euler Backward" --dt 30 --profile gauss --nr 10
 # Animación analítica con perfil rectangular
-python p02_gif_image.py --method "Euler Forward" --dt 60 --profile rectg --type analytical
+python p03_make_animation.py --analytical "Euler Backward" --dt 30 --profile gauss --nr 10
 ```
+### Parámetros configurables:  
+| Parámetro | Descripción | Valores típicos |  
+|-----------|-------------|-----------------|  
+| `--dt`    | Paso temporal | 25-120 (segundos) |  
+| `--profile` | Perfil inicial | `gauss` o `rectg` |  
+| `--nr`    | Ancho gaussiano | 2-10 |  
 
-### Parámetros configurables:
-Los siguientes parámetros se pueden modificar dentro de `p01_run_simulation.py` y `p02_gif_image.py`:
-```python
-u = 10       # Velocidad de advección (m/s)  
-Nx = 101     # Número de puntos espaciales  
-dx = 500     # Espaciado del grid (m)  
-dt = 40      # Paso de tiempo (s)  
-nr = 10      # Control del ancho de la gaussiana inicial
-```
-
-## 📊 Ejemplos  
-### 1. Simulación básica:  
+## 📊 Ejemplos de Código  
+### Simulación básica:  
 ```python
 from physics import gauss, euler_backward_step  
 Cn = [gauss(x, 0, nr=10, u=10, dx=500, Nx=101) for x in range(101)]  
 Cnp1 = euler_backward_step(Cn, u=10, dt=60, dx=500, Nx=101)  
-```
+```  
 
-### 2. Visualización 3D:  
+### Visualización 3D:  
 ```python
 from visualization import plot_3d_surface  
 plot_3d_surface(dataset, metodo="Euler Backward", ti=115, dt=60, CFL=1.2)  
-```
+```  
 
 ## 📌 Resultados  
-- Salida en NetCDF con la evolución temporal del contaminante:  
-  `outputs/data/*.nc`
-- Gráficos 3D generados automáticamente por cada paso temporal:  
-  `outputs/figures/EulerBackward/*.png`
-- Animación `.gif` con la evolución total del contaminante:  
-  `outputs/figures/*.gif`
+Ejemplos de salidas generadas:  
+- **Datos numéricos**: `outputs/data/EulerBackward_dt30_CFL0.6_dx500_profilegauss_nr10_numerical.nc`  
+- **Gráficos 3D**: `outputs/figures/EulerBackward/3D000_EulerBackward_*.png`  
+- **Animaciones**: `outputs/animations/EulerBackward_dt30_profilegauss_nr10_numerical_cropped.gif`  
 
-## 🧪 Pruebas  
+## 🧪 Pruebas (no mostrado)
 Para ejecutar las pruebas unitarias:  
 ```bash
 pytest tests/
@@ -172,6 +156,11 @@ El directorio [`docs/`](docs/) contiene documentación detallada del proyecto, i
 - `05_Experiments.md`: Configuraciones de simulación, condiciones de prueba y criterios de evaluación.  
 - `06_Referenc.md`: Bibliografía científica utilizada (formato APA7).
 
+## 📜 Versiones
+| Versión | Cambios Importantes                     | Fecha       |
+|---------|----------------------------------------|-------------|
+| v2.0.0  | Refactorización mayor del proyecto      | Jun 2024    |
+| v1.0.0  | Versión inicial estable                | May 2024    |
 
 ## ✉️ Contacto  
 ¿Preguntas? ¡Abre un *issue* o contacta a [@Japq91](https://github.com/Japq91).

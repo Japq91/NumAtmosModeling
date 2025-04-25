@@ -3,3 +3,6 @@ outputs/
 __pycache__/
 *.png
 *.log
+tests/
+.ipynb_checkpoints/
+

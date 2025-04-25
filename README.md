@@ -1,5 +1,5 @@
 # atMOdel 🌪️
-**Modelo Numérico de Advección con Esquema Euler Backward**  
+**Modelo Numérico de Advección con diferentes Esquemas**  
 *Simulación de transporte de contaminantes usando métodos numéricos y visualización 3D.*
 
 ## 📋 Tabla de Contenidos  
@@ -31,8 +31,8 @@ atMOdel/
 │   ├── data_handling.py   # Carga, guardado y metadatos de NetCDF  
 │   ├── visualization.py   # Funciones de graficado 3D y superficie  
 │   └── main.py            # Ejemplo base de simulación (1 sola corrida)  
-├── run_simulation.py      # Script principal con gestión de outputs  
-├── gif_image.py           # Script para crear animaciones .gif  
+├── p01_run_simulation.py      # Script principal con gestión de outputs  
+├── p02_gif_image.py           # Script para crear animaciones .gif  
 ├── outputs/               # Resultados de simulación  
 │   ├── data/              # Archivos NetCDF (.nc)  
 │   └── figures/           # Imágenes y animaciones  
@@ -41,12 +41,12 @@ atMOdel/
 │   ├── test_physics.py    # Pruebas del módulo físico  
 │   └── ...                # Otros archivos de test  
 ├── docs/                  # Documentación técnica completa  
-│   ├── introduccion.md  
-│   ├── ecuaciones.md  
-│   ├── metodos.md  
-│   ├── criterios_estabilidad.md  
-│   ├── experimentos.md  
-│   └── referencias.md  
+│   ├── 01_Introduction.md  
+│   ├── 02_Equation.md  
+│   ├── 03_Methods.md  
+│   ├── 04_Stability.md  
+│   ├── 05_Experiments.md  
+│   └── 06_Referenc.md  
 ├── requirements.txt       # Lista de dependencias  
 ├── README.md              # Documento de presentación del proyecto  
 └── .gitignore             # Archivos a ignorar por git  
@@ -97,7 +97,7 @@ python p01_run_simulation.py --profile rectg
 ```  
 
 **Salidas generadas**:  
-- `outputs/data/`  
+- `outputs/data/`
   - `EulerBackward_dt[VALOR]_CFL[VALOR]_dx500_profile[gauss|rectg]_nr[VALOR]_numerical.nc` (resultados numéricos)  
   - `EulerBackward_dt[VALOR]_CFL[VALOR]_dx500_profile[gauss|rectg]_nr[VALOR]_analytical.nc` (solución analítica)  
 - `outputs/figures/EulerBackward/`  

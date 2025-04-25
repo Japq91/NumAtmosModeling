@@ -18,3 +18,12 @@ def euler_backward_step(Cn, u, dt, dx, Nx):
     for j in range(Nx):
         Cnp1[j] = Cn[j] - (u * dt / dx) * (Cn[j] - Cn[j-1])
     return Cnp1
+
+def analytical_solution(x, t, u, dx, Nx, profile="gauss", nr=10):
+    """Solución analítica para la ecuación de advección con perfil gaussiano o rectangular."""
+    if profile == "gauss":
+        return gauss(x, t, nr, u, dx, Nx)
+    elif profile == "rectg":
+        return rectg(x, t, u, dx, Nx)
+    else:
+        raise ValueError("Perfil no válido. Usar 'gauss' o 'rectg'.")

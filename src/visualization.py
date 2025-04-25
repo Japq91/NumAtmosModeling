@@ -38,7 +38,7 @@ def create_custom_colormap(cmap_name='coolwarm', center_color=[0, 0, 0, 1]):
     colors[mid_point - 1 : mid_point + 1] = center_color
     return LinearSegmentedColormap.from_list(f'custom_{cmap_name}', colors)
 
-def plot_3d_surface(ds_t0, metodo, ti, dt, CFL, val_lim=25, save_path=None):
+def plot_3d_surface(ds_t0, metodo, ti, dt, CFL, val_lim=25, save_path=None, profile="gauss"):
     """Genera y guarda un gráfico 3D de la superficie de concentración.    
     Args:
         ds_t0 (xarray.Dataset): Dataset con los datos de concentración.
@@ -69,30 +69,24 @@ def plot_3d_surface(ds_t0, metodo, ti, dt, CFL, val_lim=25, save_path=None):
     ax.set_box_aspect([2, 1.1, 1])    
     # Graficar superficie
     norm = BoundaryNorm(boundaries=nlevel, ncolors=256)
-    surf = ax.plot_surface(lon_grid, lat_grid, data,
-                           cmap=custom_cmap,
-                           norm=norm,
-                           edgecolor='.1',
-                           alpha=0.9,
-                           linewidth=0.2)    
+    surf = ax.plot_surface(lon_grid, lat_grid, data, cmap=custom_cmap, norm=norm, 
+                           edgecolor='.1', alpha=0.9, linewidth=0.2)    
     # Configuración de ejes y límites
-    ax.autoscale(enable=False)
     ax.set_zlim(-val_lim, val_lim)
     ax.set_xlim(-1, 100)
     ax.set_ylim(-250,250)
-    #ax.set_ylim(-ds_t0.Y.values.max()/2, ds_t0.Y.values.max()/2)
-    
-    # Barra de colores
-    fig.colorbar(surf, ax=ax, shrink=0.5, label='Conc. Unids', ticks=nlevel[::2])
+    ax.set_xlabel('X')
+    ax.set_yticks([])   
     
     # Etiquetas y estilo
-    ax.set_xlabel('X')
-    ax.set_yticks([])
     ax.xaxis._axinfo["grid"].update({'color': 'k', 'linestyle': ':', 'alpha': 0.2, 'linewidth': .5})
     ax.zaxis._axinfo["grid"].update({'color': '.5', 'linestyle': '-.', 'alpha': 0.1, 'linewidth': .39})
-    
+    # Barra de colores
+    fig.colorbar(surf, ax=ax, shrink=0.5, label='Conc. Unids', ticks=nlevel[::2])
+ 
     # Título con parámetros de simulación
-    ax.set_title(f'{metodo}  dt: {dt}, CFL: {CFL:.2f}\nt: {ti*dt} seg.', y=0.87, fontsize=12)
+    title = f"{metodo} (Profile: {profile})  dt: {dt}, CFL: {CFL:.2f}\nt: {ti*dt} seg."
+    ax.set_title(title, y=0.87, fontsize=12)
     
     # Estilo de fondos 3D
     ax.zaxis.set_pane_color((0.7, 0.7, 0.7, 1.0))  # Plano YZ

@@ -9,4 +9,9 @@
 
 ### ⚠️ Breaking Changes
 - Los scripts ahora requieren Python 3.10+.
-- Parámetro `--method` renombrado en `p02_generate_plots.py`.
+- Parámetro `--method` renombrado en `p02_generate_plots.py`.## [v2.0.0] - 2025-04-25
+### Nuevas Funcionalidades
+- Refactorización completa de parámetros
+- Eliminación de módulos obsoletos (tests/, main.py)
+### Breaking Changes
+- Cambio en argumentos de scripts (--method → --numerical)

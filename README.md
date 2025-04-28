@@ -107,7 +107,7 @@ Scripts accept key parameters to customize the simulation:
 ## 📌 Key Parameters  
 | Parameter      | Description                          | Typical values             |  
 |----------------|--------------------------------------|----------------------------|  
-| `--method`     | Numerical scheme (`Euler Backward`)  | `"Euler Backward"`         |  
+| `--method`     | Numerical scheme (`Euler Backward`,`LFo2`,`LFo4`, etc)  | `"Euler Backward"`         |  
 | `--dt`         | Time step (seconds)                  | `30`, `40`, `60`, etc      |  
 | `--profile`    | Initial profile                      | `gauss` or `rectg`         |  
 | `--nr`         | Gaussian width                       | `2` (narrow), `10` (wide)  |  

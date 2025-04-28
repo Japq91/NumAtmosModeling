@@ -90,20 +90,20 @@ Scripts accept key parameters to customize the simulation:
 2. **Generate static plots**  
    ```bash
    # For numerical results:
-   python p02_generate_plots.py --numerical "Euler Backward" --dt 30 --profile gauss --nr 10
+   python p02_generate_plots.py --numerical "Euler Backward" --dt 50 --profile gauss --nr 10
 
    # For analytical solution:
-   python p02_generate_plots.py --analytical "Euler Backward" --dt 30 --profile gauss --nr 10
+   python p02_generate_plots.py --analytical "Euler Backward" --dt 50 --profile gauss --nr 10
    ```  
    *Saves images in `outputs/figures/`*  
 
 3. **Create animation**
    ```bash
-   python p03_make_animation.py --numerical "Euler Backward" --dt 30 --profile gauss --nr 10 --engine imagemagick
+   python p03_make_animation.py --numerical "Euler Backward" --dt 50 --profile gauss --nr 10 --engine imagemagick
    ```
    *Generates GIF in `outputs/animations/`* using ImageMagick 
    ```bash
-   python p03_make_animation.py --analytical "Euler Backward" --dt 30 --profile gauss --nr 10
+   python p03_make_animation.py --analytical "Euler Backward" --dt 50 --profile gauss --nr 10
    ```  
    *Generates GIF in `outputs/animations/`* using PIL
 

@@ -20,11 +20,13 @@ def setup_custom_levels():
     #p2 = [e*-1 for e in p1[:]]
     #p2.extend(p1)
     #nlevel = sorted(np.array(p2))
-    nlevel = [-12, -10, -8, -6, -4, -3, -2, -1.5, -1.2, -0.9, -0.6, -0.4, -0.2,  -0.1, 
-              -0.05, 0.05, 0.1, 0.2, 0.4, 0.6, 0.9, 1.2, 1.5, 2, 3, 4, 6, 8, 10, 12]
+    nlevel = [-12, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, -0.7, -0.4,  -0.2, 
+              -0.1, 0.1, 0.2, 0.4, 0.7, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12]
+    #nlevel = [-11.5, -9.5, -7, -5, -4, -3, -2, -1.5, -1.2, -0.9, -0.6, -0.4, -0.2,  -0.1, 
+    #          -0.05, 0.05, 0.1, 0.2, 0.4, 0.6, 0.9, 1.2, 1.5, 2, 3, 4, 5, 7, 9.5, 11.5]
     return nlevel
 
-def create_custom_colormap(cmap_name='coolwarm', center_color=[0, 0, 0, 1]):
+def create_custom_colormap(cmap_name='turbo', center_color=[0, 0, 0, 1]): #coolwarm
     """Crea un colormap personalizado con una línea central destacada.    
     Args:
         cmap_name (str): Nombre del colormap base (por defecto: 'coolwarm').
@@ -63,7 +65,7 @@ def plot_3d_surface(ds_t0, metodo, ti, dt, CFL, val_lim=25, save_path=None, prof
     nlevel = setup_custom_levels()
     custom_cmap = create_custom_colormap()
     # Crear figura 3D
-    fig = plt.figure(figsize=(10,8))
+    fig = plt.figure(figsize=(5,6))
     ax = fig.add_subplot(111, projection='3d')
     # Obtener coordenadas y datos
     lon = ds_t0.X.values
@@ -75,7 +77,7 @@ def plot_3d_surface(ds_t0, metodo, ti, dt, CFL, val_lim=25, save_path=None, prof
     data[data < -val_lim] = np.nan    
     # Configuración de la vista 3D
     ax.view_init(elev=25, azim=-100)
-    ax.set_box_aspect([2, 1.1, 1])    
+    ax.set_box_aspect([1.6, 1.1, 1])    
     # Graficar superficie
     norm = BoundaryNorm(boundaries=nlevel, ncolors=256)
     surf = ax.plot_surface(lon_grid, lat_grid, data, cmap=custom_cmap, norm=norm, 
@@ -94,7 +96,10 @@ def plot_3d_surface(ds_t0, metodo, ti, dt, CFL, val_lim=25, save_path=None, prof
     fig.colorbar(surf, ax=ax, shrink=0.5, label='Conc. Unids', ticks=nlevel[::2])
  
     # Título con parámetros de simulación
-    title = f"{metodo} (Profile: {profile})  dt: {dt}, CFL: {CFL:.2f}\nt: {ti*dt} seg."
+    if 'anal' in metodo: meto1='Analytical'
+    else: meto1=metodo[:-12]
+    title = f"{meto1} (Profile: {profile})\ndt: {dt}, CFL: {CFL:.2f}\nt: {ti*dt} seg."
+    
     ax.set_title(title, y=0.87, fontsize=12)
     
     # Estilo de fondos 3D

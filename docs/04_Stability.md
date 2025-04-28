@@ -46,7 +46,7 @@ The CFL condition ensures that numerical information propagates within one grid 
 ---
 ### Stability Criterion for Leapfrog Fourth-Order
 
-The theoretical stability limit for the fourth-order Leapfrog scheme is highlighted in Figure 5 (Doös, 2022).
+The theoretical stability limit for the fourth-order Leapfrog scheme is highlighted (Doös, 2022).
 
 ![Figura 5 - Stability criterion curve showing minimum CFL ≈ 0.729 (Doös, 2022)](images/figura5_stability.png)
 
@@ -70,7 +70,7 @@ This guarantees damping (dissipative behavior) and hence stability, at the cost 
 ---
 ### Amplification Factor Behavior Across Schemes
 
-Figure 8 from Randall (2021) compares the amplification factors of several numerical methods, showing how some schemes preserve or dissipate wave amplitudes.
+Randall (2021) compares the amplification factors of several numerical methods, showing how some schemes preserve or dissipate wave amplitudes.
 
 ![Figura 8 - Amplification factor |λ| as a function of Ω (Randall, 2021)](images/figura8_amplification.png)
 

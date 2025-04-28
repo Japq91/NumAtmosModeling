@@ -109,6 +109,8 @@ Scripts accept key parameters to customize the simulation:
 example:
 ![Figura 1](outputs/animations/EulerBackward_dt50.0_profilegauss_nr10.0_numerical_cropped.gif)
 
+![Figura 2](outputs/animations/EulerBackward_dt50.0_profilegauss_nr10.0_analytical_cropped.gif)
+
 ---
 
 ## 📌 Key Parameters  

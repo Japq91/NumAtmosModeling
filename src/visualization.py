@@ -37,6 +37,15 @@ def create_custom_colormap(cmap_name='coolwarm', center_color=[0, 0, 0, 1]):
     mid_point = len(colors) // 2
     colors[mid_point - 1 : mid_point + 1] = center_color
     return LinearSegmentedColormap.from_list(f'custom_{cmap_name}', colors)
+def plot_2d_section(ds, axis='x', save_path=None):
+    """Nueva función para gráficos 2D"""
+    # Implementar según necesidades
+    pass
+
+def plot_1d_timeseries(ds, positions, save_path=None):
+    """Nueva función para gráficos 1D"""
+    # Implementar según necesidades
+    pass
 
 def plot_3d_surface(ds_t0, metodo, ti, dt, CFL, val_lim=25, save_path=None, profile="gauss"):
     """Genera y guarda un gráfico 3D de la superficie de concentración.    
@@ -94,7 +103,7 @@ def plot_3d_surface(ds_t0, metodo, ti, dt, CFL, val_lim=25, save_path=None, prof
     
     # Guardar figura si se especifica ruta
     if save_path:
-        fig.savefig(save_path, dpi=300,) #bbox_inches='tight')
+        fig.savefig(save_path, dpi=200,) #bbox_inches='tight')
         plt.close(fig)
     else:
         plt.show()

@@ -1,5 +1,5 @@
-outputs/
+#outputs/
 *.pyc
 __pycache__/
-*.png
+.png
 *.log

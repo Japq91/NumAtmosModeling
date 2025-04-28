@@ -9,7 +9,7 @@ from PIL import Image
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUTS_DIR = os.path.join(BASE_DIR, "outputs")
 #
-def crop_image(image_path, espacio=4):
+def crop_image(image_path, espacio=5):
     """Recorta la imagen manteniendo el 3/4 central (tu lógica original)"""
     try:
         img = Image.open(image_path)
@@ -121,7 +121,7 @@ def main():
     
     # Opciones adicionales
     parser.add_argument('--duration', type=int, default=50, help='Duración entre frames (ms)')
-    parser.add_argument('--espacio', type=int, default=4, 
+    parser.add_argument('--espacio', type=int, default=5, 
                        help='Parámetro de recorte (1/espacio superior, (espacio-1)/espacio inferior)')
     parser.add_argument('--engine', choices=['pillow', 'imagemagick'], default='pillow',
                    help='Motor para generar GIFs (default: pillow)')

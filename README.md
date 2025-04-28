@@ -14,31 +14,31 @@
 9. [Contribution](#-contribution)  
 10. [Technical Documentation](#-technical-documentation)  
 
-## 🌟 Description  
+## Description  
 This project simulates the transport of a pollutant in a one-dimensional flow using:  
-- **Euler Backward Scheme** for time discretization.  
+- **Euler Backward Scheme** for time discretization (por ahora...).  
 - **Periodic boundary conditions**.  
 - Interactive visualization with `matplotlib` and `xarray`.  
 
 **Applications**: Atmospheric modeling, pollutant dispersion, fluid dynamics.  
 
-## 📂 Project Structure  
+## Project Structure  
 ```plaintext
 atMOdel/  
-├── 📁 src/                   # Source code  
-│   ├── physics.py         # Numerical functions (e.g., Euler backward)  
-│   ├── data_handling.py   # NetCDF data loading, saving, and metadata  
-│   ├── visualization.py   # 3D and surface plotting functions  
-│   └── main.py            # Base simulation example (single run)  
-├── 📜 p01_run_simulation.py  # Launches main simulation  
-├── 📜 p02_generate_plots.py  # Generates static plots  
-├── 📜 p03_make_animation.py  # Creates GIF animations  
-├── 📜 requirements.txt       # Dependencies  
-├── 📁 outputs/               # Generated results  
-│   ├── animations/           # Time evolution GIFs  
-│   ├── data/                 # NetCDF data (*.nc)  
-│   ├── figures/              # Static figures (PNG)  
-├── 📁 docs/                  # Technical documentation  
+├── 📁 src/                    # Source code  
+│   ├── physics.py             # Numerical functions (e.g., Euler backward)  
+│   ├── data_handling.py       # NetCDF data loading, saving, and metadata  
+│   ├── visualization.py       # 3D and surface plotting functions  
+│   └── main.py                # Base simulation example (single run)  
+├── 📜 p01_run_simulation.py   # Launches main simulation  
+├── 📜 p02_generate_plots.py   # Generates static plots  
+├── 📜 p03_make_animation.py   # Creates GIF animations  
+├── 📜 requirements.txt        # Dependencies  
+├── 📁 outputs/                # Generated results  
+│   ├── animations/            # Time evolution GIFs  
+│   ├── data/                  # NetCDF data (*.nc)  
+│   ├── figures/               # Static figures (PNG)  
+├── 📁 docs/                   # Technical documentation  
 │   ├── 📖 01_Introduction.md  
 │   ├── 📖 02_Equation.md  
 │   ├── 📖 03_Methods.md  
@@ -47,10 +47,11 @@ atMOdel/
 │   └── 📖 06_Referenc.md  
 ├── 📜 requirements.txt       # List of dependencies  
 ├── 📜 README.md              # Project presentation document  
+├── 📜 setup.py               # setup  
 └── 📜 .gitignore             # Git ignored files  
 ```
 
-## 🛠️ Requirements  
+## Requirements  
 - **Python 3.8+**  
 - Libraries (see `requirements.txt`):  
 ```plaintext
@@ -72,7 +73,7 @@ cd atMOdel
 pip install -r requirements.txt
 ```
 
-## 🚀 Usage  
+## Usage  
 ### Basic setup  
 Scripts accept key parameters to customize the simulation:  
 - `--dt`: Time step (default: `40`)  
@@ -107,8 +108,8 @@ Scripts accept key parameters to customize the simulation:
    *Generates GIF in `outputs/animations/`* using PIL
 
 4. **example**
-<img src="outputs/animations/EulerBackward_dt50.0_profilegauss_nr10.0_numerical_cropped.gif" alt="Figura 1" width="40%" />
-<img src="outputs/animations/EulerBackward_dt50.0_profilegauss_nr10.0_analytical_cropped.gif" alt="Figura 2" width="40%" />
+<img src="outputs/animations/EulerBackward_dt50.0_profilegauss_nr10.0_numerical_cropped.gif" alt="Figura 1" width="45%" />
+<img src="outputs/animations/EulerBackward_dt50.0_profilegauss_nr10.0_analytical_cropped.gif" alt="Figura 2" width="45%" />
 
 
 ---

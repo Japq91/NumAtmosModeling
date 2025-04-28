@@ -5,80 +5,71 @@ import numpy as np
 import xarray as xr
 import pandas as pd
 import argparse
-from src.physics import gauss, rectg, euler_backward_step, analytical_solution
-from src.visualization import plot_3d_surface
+from src.physics import analytical_solution, euler_backward_step
 from src.data_handling import create_dataset, save_dataset
 
 # Constantes físicas
-u = 10  # Velocidad de advección (m/s)
-ds = 500  # Espaciado del grid (m)
+U = 10  # Velocidad (m/s)
+DX = 500  # Espaciado (m)
 
 # Configuración de directorios
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUTS_DIR = os.path.join(BASE_DIR, "outputs")
-os.makedirs(os.path.join(OUTPUTS_DIR, "data"), exist_ok=True)
-os.makedirs(os.path.join(OUTPUTS_DIR, "figures"), exist_ok=True)
+DATA_DIR = os.path.join(OUTPUTS_DIR, "data")
+os.makedirs(DATA_DIR, exist_ok=True)
 
-def run_simulation(dt, nr, metodo, profile="gauss"):
-    # Parámetros de simulación
-    #u = 10       # Velocidad de advección (m/s)
-    Nx = 101     # Puntos en la malla
-    #dx = 500     # Espaciado del grid (m)
-    total_steps = Nx * 2  # Pasos totales de simulación
+def run_simulation(dt, nr, method, profile="gauss"):
+    """Ejecuta simulación y guarda resultados en NetCDF"""
+    Nx = 101
+    total_steps = Nx * 2
+    CFL = round(U * dt / DX, 2)
 
-    # Coordenadas espaciales y temporales
-    X = [e * dx for e in range(Nx)]
-    T = [e * dt for e in range(total_steps)][:10]  # Solo primeros 10 pasos
-    CFL = dt * u / dx
-    print(f"CFL number: {CFL:.2f}")
+    # Coordenadas
+    X = [e * DX for e in range(Nx)]
+    T = [e * dt for e in range(total_steps)][:10]  # Primeros 10 pasos
 
     # Simulación numérica
     M_num = []
-    Cn = np.array([analytical_solution(x, 0, u, dx, Nx, profile, nr) for x in X])  # Condición inicial
+    Cn = np.array([analytical_solution(x, 0, U, DX, Nx, profile, nr) for x in X])
     for t in T:
-        if t == 0:
-            M_num.append(Cn.copy())
-            continue
-        Cn = euler_backward_step(Cn, u, dt, dx, Nx)
+        if t != 0:
+            Cn = euler_backward_step(Cn, U, dt, DX, Nx)
         M_num.append(Cn.copy())
 
-    # Solución analítica (para comparación)
-    M_analytical = []
-    for t in T:
-        M_analytical.append([analytical_solution(x, t, u, dx, Nx, profile, nr) for x in X])
+    # Solución analítica
+    M_analytical = [[analytical_solution(x, t, U, DX, Nx, profile, nr) for x in X] for t in T]
 
-    # Crear datasets
-    ds_num = create_dataset(M_num, Nx, dx, T)
-    ds_analytical = create_dataset(M_analytical, Nx, dx, T)
+    # Crear y guardar datasets
+    base_name = f"{method.replace(' ', '')}_dt{dt}_CFL{CFL}_dx{DX}_profile{profile}"
+    if profile == 'gauss':
+        base_name += f"_nr{nr}"
 
-    # Añadir metadatos
-    for ds in [ds_num, ds_analytical]:
+    datasets = {
+        "numerical": create_dataset(M_num, Nx, DX, T),
+        "analytical": create_dataset(M_analytical, Nx, DX, T)
+    }
+
+    for key, ds in datasets.items():
         ds.attrs.update({
-            'simulation_parameters': f"u={u}, Nx={Nx}, dx={dx}, dt={dt}, nr={nr}, profile={profile}",
+            'simulation_parameters': f"U={U}, Nx={Nx}, DX={DX}, dt={dt}, profile={profile}{f', nr={nr}' if profile == 'gauss' else ''}",
             'CFL_number': CFL,
-            'author': 'Japq',
-            'created': pd.Timestamp.now().isoformat()
+            'data_type': key
         })
+        save_dataset(ds, os.path.join(DATA_DIR, f"{base_name}_{key}"))
 
-    # Guardar resultados
-    nmet = metodo.replace(' ', '')
-    o_file = f"{nmet}_dt{dt}_CFL{CFL:.2f}_dx{dx}_profile{profile}_nr{nr}"
-    
-    # Guardar datos numéricos y analíticos
-    save_dataset(ds_num, os.path.join(OUTPUTS_DIR, "data", f"{o_file}_numerical"))
-    save_dataset(ds_analytical, os.path.join(OUTPUTS_DIR, "data", f"{o_file}_analytical"))
-
-    # Generar figuras
-    os.makedirs(os.path.join(OUTPUTS_DIR, "figures", nmet), exist_ok=True)
-    for ti, t in enumerate(T):
-        fig_path = os.path.join(OUTPUTS_DIR, "figures", nmet, f"3D{ti:03d}_{o_file}.png")
-        plot_3d_surface(ds_num.isel(time=ti), metodo, ti, dt, CFL, save_path=fig_path, profile=profile)
+    return base_name
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--dt", type=float, default=40, help="Paso de tiempo (s)")
-    parser.add_argument("--nr", type=float, default=10, help="Ancho de la gaussiana (nr*dx)")
-    parser.add_argument("--profile", type=str, default="gauss", choices=["gauss", "rectg"], help="Perfil inicial (gauss/rectg)")
+    parser = argparse.ArgumentParser(description='Genera datasets de simulación')
+    parser.add_argument('--method', required=True, help='Método numérico')
+    parser.add_argument('--dt', type=float, required=True, help='Paso de tiempo (s)')
+    parser.add_argument('--profile', choices=['gauss', 'rectg'], required=True)
+    parser.add_argument('--nr', type=float, help='Ancho gaussiana (requerido para profile=gauss)')
+    
     args = parser.parse_args()
-
-    run_simulation(args.dt, args.nr, "Euler Backward", args.profile)
+    
+    if args.profile == 'gauss' and args.nr is None:
+        parser.error("Se requiere --nr para perfil gaussiano")
+    
+    base_name = run_simulation(args.dt, args.nr, args.method, args.profile)
+    print(f"✅ Datasets generados con prefijo: {base_name}")

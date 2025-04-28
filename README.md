@@ -106,9 +106,9 @@ Scripts accept key parameters to customize the simulation:
    ```  
    *Generates GIF in `outputs/animations/`* using PIL
 
-example:
-<img src="outputs/animations/EulerBackward_dt50.0_profilegauss_nr10.0_numerical_cropped.gif" alt="Figura 1" width="50%" />
-<img src="outputs/animations/EulerBackward_dt50.0_profilegauss_nr10.0_analytical_cropped.gif" alt="Figura 2" width="50%" />
+**example**
+<img src="outputs/animations/EulerBackward_dt50.0_profilegauss_nr10.0_numerical_cropped.gif" alt="Figura 1" width="40%" />
+<img src="outputs/animations/EulerBackward_dt50.0_profilegauss_nr10.0_analytical_cropped.gif" alt="Figura 2" width="40%" />
 
 
 ---

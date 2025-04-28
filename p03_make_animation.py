@@ -4,13 +4,13 @@ import os
 import glob
 import argparse
 from PIL import Image
-
+#
 # Configuración de directorios
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUTS_DIR = os.path.join(BASE_DIR, "outputs")
-
-def crop_image(image_path, espacio=7):
-    """Recorta la imagen manteniendo el 6/7 central (tu lógica original)"""
+#
+def crop_image(image_path, espacio=4):
+    """Recorta la imagen manteniendo el 3/4 central (tu lógica original)"""
     try:
         img = Image.open(image_path)
         width, height = img.size
@@ -20,8 +20,46 @@ def crop_image(image_path, espacio=7):
     except Exception as e:
         print(f"Error al recortar {image_path}: {str(e)}")
         return None
+######################
+# def save_cropped_images(image_paths, temp_dir="temp_cropped"):
+#     """Guarda versiones recortadas en carpeta temporal"""
+#     os.makedirs(temp_dir, exist_ok=True)
+#     cropped_paths = []
+#     for img_path in image_paths:
+#         img = crop_image(img_path)
+#         img = img.resize((width//2, height//2))
+#         if img:
+#             new_path = os.path.join(temp_dir, os.path.basename(img_path))
+#             img.save(new_path)
+#             cropped_paths.append(new_path)
+#     return cropped_paths
 
-def create_animation_with_crop(image_paths, output_path, duration=200):
+# def create_gif_with_convert(image_paths, output_path, delay=50):
+#     """Crea GIF con ImageMagick usando os.system"""
+#     temp_dir = "temp_cropped"
+#     cropped_paths = save_cropped_images(image_paths, temp_dir)
+    
+#     if not cropped_paths:
+#         print("Error: No hay imágenes recortadas válidas")
+#         return
+    
+#     # Convert delay (ms to centisec)
+#     delay_cs = max(1, delay // 10)  # Asegura mínimo 1 centisegundo
+    
+#     # Construye comando
+#     cmd = f"convert -delay {delay_cs} -loop 0 {' '.join(sorted(cropped_paths))} {output_path}"
+#     # Ejecuta y verifica
+#     if os.system(cmd) == 0:
+#         print(f"GIF creado con convert: {output_path}")
+#         # Limpieza opcional:
+#         for img in cropped_paths:
+#             os.remove(img)
+#         os.rmdir(temp_dir)
+#     else:
+#         print("Error al ejecutar convert. ¿Está ImageMagick instalado?")
+# ######################
+######################
+def create_animation_with_crop(image_paths, output_path, duration=20):
     """Crea GIF con recorte de imágenes"""
     if not image_paths:
         print(f"Error: No se encontraron imágenes para animación")
@@ -82,10 +120,11 @@ def main():
     group.add_argument('--analytical', metavar='METHOD', help='Animación para solución analítica')
     
     # Opciones adicionales
-    parser.add_argument('--duration', type=int, default=200, help='Duración entre frames (ms)')
-    parser.add_argument('--espacio', type=int, default=7, 
+    parser.add_argument('--duration', type=int, default=50, help='Duración entre frames (ms)')
+    parser.add_argument('--espacio', type=int, default=4, 
                        help='Parámetro de recorte (1/espacio superior, (espacio-1)/espacio inferior)')
-    
+    parser.add_argument('--engine', choices=['pillow', 'imagemagick'], default='pillow',
+                   help='Motor para generar GIFs (default: pillow)')
     args = parser.parse_args()
     
     # Validaciones
@@ -123,7 +162,11 @@ def main():
     
     # Crear animación con recorte
     print(f"\nGenerando animación con recorte (espacio={args.espacio})...")
-    create_animation_with_crop(image_paths, output_path, args.duration)
+    #create_animation_with_crop(image_paths, output_path, args.duration)
+    if args.engine == 'imagemagick':
+        create_gif_with_convert(image_paths, output_path, delay=args.duration, espacio=args.espacio, max_workers=4)
+    else:
+        create_animation_with_crop(image_paths, output_path, args.duration)
 
 if __name__ == "__main__":
     main()

@@ -21,7 +21,7 @@ os.makedirs(DATA_DIR, exist_ok=True)
 def run_simulation(dt, nr, method, profile="gauss"):
     """Ejecuta simulación y guarda resultados en NetCDF"""
     Nx = 101
-    total_steps = Nx * 2 # cantidad de tiempos, puede ser un numero cualquiera
+    total_steps = Nx * 1 # cantidad de tiempos, puede ser un numero cualquiera
     CFL = U * dt / DX
 
     # Coordenadas

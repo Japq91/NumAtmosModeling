@@ -96,11 +96,18 @@ Scripts accept key parameters to customize the simulation:
    ```  
    *Saves images in `outputs/figures/`*  
 
-3. **Create animation**  
+3. **Create animation**
+   ```bash
+   python p03_make_animation.py --numerical "Euler Backward" --dt 30 --profile gauss --nr 10 --engine imagemagick
+   ```
+   *Generates GIF in `outputs/animations/`* using ImageMagick 
    ```bash
    python p03_make_animation.py --analytical "Euler Backward" --dt 30 --profile gauss --nr 10
    ```  
-   *Generates GIF in `outputs/animations/`*  
+   *Generates GIF in `outputs/animations/`* using PIL
+
+example:
+![Figura 1](outputs/animations/EulerBackward_dt50.0_profilegauss_nr10.0_numerical_cropped.gif)
 
 ---
 

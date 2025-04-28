@@ -18,6 +18,6 @@ In this project, we evaluate several numerical schemes to solve the 1D advection
 - Boundary conditions (periodic, rigid, and radiative)
 - Variations in the CFL number to assess stability
 
-The goal is to analyze how different numerical methods reproduce the analytical solution and how parameter choices influence stability, accuracy, and solution behavior.
+"The goal, of course, is to admire how numerical methods almost reproduce the analytical solution, while parameter choices do their best to sabotage stability, accuracy, and any hope of a decent result." gaaa
 
 

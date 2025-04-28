@@ -12,7 +12,7 @@ Each method has different stability conditions, accuracy orders, and implementat
 
     C_j^{n+1} = C_j^n - (U * Δt / Δx) * (C_j^n - C_{j-1}^n)
 
-- Implicit method (unconditionally stable for CFL ≤ 1)
+- Explicit method (unconditionally stable for CFL ≤ 1, unconditionally unstable for CFL > 1)
 - First-order accurate in time: O(Δt)
 - Adds numerical diffusion
 

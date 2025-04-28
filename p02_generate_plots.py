@@ -26,7 +26,7 @@ def generate_plots(dt, profile, nr=None, method=None, data_type='numerical'):
     data_path = find_data_file(dt, profile, nr, method, data_type)
     
     if not data_path:
-        print(f"❌ Error: No se encontró archivo {data_type} para:")
+        print(f"Error: No se encontró archivo {data_type} para:")
         print(f"method={method}, dt={dt}, profile={profile}" + (f", nr={nr}" if nr else ""))
         print("\nArchivos disponibles en outputs/data/:")
         for f in glob.glob("outputs/data/*.nc"):
@@ -51,10 +51,10 @@ def generate_plots(dt, profile, nr=None, method=None, data_type='numerical'):
                 save_path=fig_path,
                 profile=profile
             )
-        print(f"✅ Gráficos generados en outputs/figures/{dir_name}/")
+        print(f"Gráficos generados en outputs/figures/{dir_name}/")
         
     except Exception as e:
-        print(f"❌ Error procesando archivo: {str(e)}")
+        print(f"Error procesando archivo: {str(e)}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generador de visualizaciones')

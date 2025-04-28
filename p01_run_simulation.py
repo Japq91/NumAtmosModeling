@@ -21,12 +21,12 @@ os.makedirs(DATA_DIR, exist_ok=True)
 def run_simulation(dt, nr, method, profile="gauss"):
     """Ejecuta simulación y guarda resultados en NetCDF"""
     Nx = 101
-    total_steps = Nx * 2
-    CFL = round(U * dt / DX, 2)
+    total_steps = Nx * 2 # cantidad de tiempos, puede ser un numero cualquiera
+    CFL = U * dt / DX
 
     # Coordenadas
     X = [e * DX for e in range(Nx)]
-    T = [e * dt for e in range(total_steps)][:10]  # Primeros 10 pasos
+    T = [e * dt for e in range(total_steps)][:]  #[:10] Primeros 10 pasos
 
     # Simulación numérica
     M_num = []
@@ -72,4 +72,4 @@ if __name__ == "__main__":
         parser.error("Se requiere --nr para perfil gaussiano")
     
     base_name = run_simulation(args.dt, args.nr, args.method, args.profile)
-    print(f"✅ Datasets generados con prefijo: {base_name}")
+    print(f"Datasets generados con prefijo: {base_name}")

@@ -18,13 +18,13 @@ def crop_image(image_path, espacio=7):
         bottom = (espacio-1) * height // espacio
         return img.crop((0, top, width, bottom))
     except Exception as e:
-        print(f"❌ Error al recortar {image_path}: {str(e)}")
+        print(f"Error al recortar {image_path}: {str(e)}")
         return None
 
 def create_animation_with_crop(image_paths, output_path, duration=200):
     """Crea GIF con recorte de imágenes"""
     if not image_paths:
-        print("❌ Error: No se encontraron imágenes para animación")
+        print(f"Error: No se encontraron imágenes para animación")
         return
     
     cropped_images = []
@@ -34,7 +34,7 @@ def create_animation_with_crop(image_paths, output_path, duration=200):
             cropped_images.append(cropped)
     
     if not cropped_images:
-        print("❌ Error: No hay imágenes válidas después del recorte")
+        print(f"Error: No hay imágenes válidas después del recorte")
         return
     
     try:
@@ -47,9 +47,9 @@ def create_animation_with_crop(image_paths, output_path, duration=200):
             loop=0,
             optimize=True
         )
-        print(f"✅ Animación con recorte creada: {output_path}")
+        print(f"Animación con recorte creada: {output_path}")
     except Exception as e:
-        print(f"❌ Error al guardar GIF: {str(e)}")
+        print(f"Error al guardar GIF: {str(e)}")
 
 def find_image_sequence(method, dt, profile, nr=None, data_type='numerical'):
     """Busca secuencias de imágenes con el patrón correcto"""
@@ -106,7 +106,7 @@ def main():
     )
     
     if not image_paths:
-        print(f"\n❌ No se encontraron imágenes {data_type} para:")
+        print(f"\nNo se encontraron imágenes {data_type} para:")
         print(f"method={method}, dt={args.dt}, profile={args.profile}" + (f", nr={args.nr}" if args.nr else ""))
         return
     
@@ -122,7 +122,7 @@ def main():
     output_path = os.path.join(output_dir, output_name)
     
     # Crear animación con recorte
-    print(f"\n✂️  Generando animación con recorte (espacio={args.espacio})...")
+    print(f"\nGenerando animación con recorte (espacio={args.espacio})...")
     create_animation_with_crop(image_paths, output_path, args.duration)
 
 if __name__ == "__main__":

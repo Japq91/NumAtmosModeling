@@ -27,6 +27,13 @@ Each method has different stability conditions, accuracy orders, and implementat
 - No dissipation but introduces phase errors and dispersion
 
 ---
+### Oscillation Behavior in Leapfrog Method
+
+The tendency of Leapfrog to develop oscillations at CFL < 1 is illustrated in Figure 3, based on Randall (2021).
+
+![Figura 3 - Oscillations in centered difference schemes (Randall, 2021)](images/figura3_randall.png)
+
+---
 
 ## 3. Leapfrog with Fourth-Order Derivative (Explicit)
 

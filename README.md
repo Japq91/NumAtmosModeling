@@ -142,6 +142,26 @@ u = 10      # Velocity (m/s)
 Nx = 101    # Spatial points  
 dx = 500    # Resolution (m)  
 ```
+## 🧪 Testing  
+To run unit tests:  
+```bash
+pip install -e .
+pytest tests/
+```  
+Includes tests for modules:  
+- `data_handling.py`  
+- `physics.py`  
+- `visualization.py`
+
+### **Interactive Notebooks**  
+Explore step-by-step calculations and debugging in these Jupyter notebooks:  
+1. **`tests/dataset_view.ipynb`**:  
+   - Visual inspection of dataset structure.  
+   - Examples of data slicing and basic plotting.  
+
+2. **`tests/Euler_Backward.ipynb`**:  
+   - Detailed derivation of the Euler Backward scheme.  
+   - ... >_< ire agregando los demas metodos 
 
 ## 🤝 Contribution  
 - https://chat.deepseek.com  
